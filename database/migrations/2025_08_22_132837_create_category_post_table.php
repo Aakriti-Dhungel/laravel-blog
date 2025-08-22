@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('post_category', function (Blueprint $table) {
+        Schema::create('category_post', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('post_id')->constrained('posts')->cascadeOnDelete();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
-            $table->unique(['post_id', 'category_id']); // prevent duplicate post-category pairs
+            $table->foreignId('post_id')->constrained('posts')->cascadeOnDelete();
+            $table->unique(['post_id', 'category_id']); // prevent duplicate category-post pairs
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('post_category');
+        Schema::dropIfExists('category_post');
     }
 };

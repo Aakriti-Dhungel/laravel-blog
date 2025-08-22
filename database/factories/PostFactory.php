@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,11 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => User::inRandomOrder()->value('id'),
+            // 'category_id' => Category::inRandomOrder()->value('id'), //this will assign through pivot table
+            'title' => fake()->sentence(),
+            // 'title' => $this->faker->sentence(), //we can do using this also
+            'body' => fake()->paragraph(),
         ];
     }
 }
