@@ -6,10 +6,10 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-
     public function totalPostPerUser()
     {
         $posts = User::withCount('posts')->get();
@@ -66,14 +66,14 @@ class PostController extends Controller
             'body' => 'required|string',
             'status' => 'required|in:draft,published',
             'categories' => 'required|array',
-            'categories.*' => 'exists:categories,id', // each selected category must exist
+            'categories.*' => 'exists:categories,id',
         ]);
 
         $post = Post::create([
             'title' => $request->title,
             'body' => $request->body,
             'status' => $request->status,
-            'user_id' => auth()->id(),             // if posts belong to users
+            'user_id' => Auth::id(),             // if posts belong to users
         ]);
 
         //  Attach categories (pivot table)
