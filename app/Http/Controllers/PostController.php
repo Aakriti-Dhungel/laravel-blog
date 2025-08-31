@@ -40,12 +40,25 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $posts = Post::paginate(10);
-        // return $posts;
-        return view('post.index', compact('posts'));
+    public function index(Request $request)
+{
+    $query = Post::with('user','categories', 'comments'); 
+
+    // Search filter
+    if ($request->filled('search')) {
+        $search = $request->search;
+        $query->where(function($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+              ->orWhere('body', 'like', "%{$search}%");
+        });
     }
+
+    // Paginate the filtered results
+    $posts = $query->paginate(10);
+
+    return view('post.index', compact('posts'));
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -85,32 +98,58 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        return view('post.show', compact('post'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $categories = Category::all();
+
+        return view('post.edit', compact('post', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'body' => 'required|string',
+            'status' => 'required|in:draft,published',
+            'categories' => 'array',
+        ]);
+
+        $post = Post::findOrFail($id);
+
+        $post->update([
+            'title' => $request->input('title'),
+            'body' => $request->input('body'),
+            'status' => $request->input('status'),
+        ]);
+
+        $post->categories()->sync($request->input('categories', []));
+
+
+        return redirect()->route('posts.index')->with('success', 'Post updated successfully!');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        return redirect()->route('posts.index')->with('success', 'Post deleted successfully!');
     }
 }
