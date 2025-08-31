@@ -27,30 +27,37 @@
         @endif
 
 
-
-        <div class="flex justify-between">
-
-            <div class="text-left mb-4">
-                <a href="{{ route('posts.create') }}"
-                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                    Create Post
-                </a>
-            </div>
-
-            <div>
-                <form action="{{ route('posts.index') }}" method="GET" class="flex">
-                    <input type="search" name="search" id="search" placeholder="Search..."
-                        value="{{ request('search') }}"
-                        class="w-full rounded-l border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                    <button type="submit"
-                        class="px-4 py-2 bg-blue-500 text-white rounded-r hover:bg-blue-600">
-                        Search
-                    </button>
-                </form>
-            </div>
-
-
+        <div class="text-right mb-4">
+            <a href="{{ route('posts.create') }}"
+                class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                Create Post
+            </a>
         </div>
+
+            <form action="{{ route('posts.index') }}" method="GET" class="flex ">
+
+                <!-- Category  -->
+                <select name="category" class="rounded border px-3 py-2">
+                    <option value="">All Categories</option>
+                    @foreach($categories as $category)
+                    <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
+                    @endforeach
+                </select>
+
+
+                <input type="search" name="search" id="search" placeholder="Search..."
+                    value="{{ request('search') }}"
+                    class="w-full rounded-l border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <button type="submit"
+                    class="px-4 py-2 bg-blue-500 text-white rounded-r hover:bg-blue-600">
+                    Search
+                </button>
+
+
+            </form>
+
 
         <div class="overflow-x-auto">
             <table class="w-full bg-white shadow-sm hover:shadow-md transition">
@@ -62,7 +69,7 @@
                         <th class="px-3 py-2">Body</th>
                         <th class="px-3 py-2">Action</th>
 
-                    </tr>
+                    </tr>Filter
                 </thead>
                 <tbody>
                     @foreach($posts as $post)

@@ -41,23 +41,28 @@ class PostController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-{
-    $query = Post::with('user','categories', 'comments'); 
+    {
+        $query = Post::with('user', 'categories', 'comments');
 
-    // Search filter
-    if ($request->filled('search')) {
-        $search = $request->search;
-        $query->where(function($q) use ($search) {
-            $q->where('title', 'like', "%{$search}%")
-              ->orWhere('body', 'like', "%{$search}%");
-        });
+        // Search filter
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('body', 'like', "%{$search}%");
+            });
+        }
+        if ($request->filled('category')) {
+            $query->whereHas('categories', function ($q) use ($request) {
+                $q->where('categories.id', $request->category);
+            });
+        }
+
+        // Paginate the filtered results
+        $posts = $query->paginate(10);
+        $categories = Category::all();
+        return view('post.index', compact('posts', 'categories'));
     }
-
-    // Paginate the filtered results
-    $posts = $query->paginate(10);
-
-    return view('post.index', compact('posts'));
-}
 
 
     /**
