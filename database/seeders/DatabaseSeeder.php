@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -32,6 +33,8 @@ class DatabaseSeeder extends Seeder
 
         // 200 posts
         $posts = Post::factory(200)->create();
+
+        Comment::factory(500)->create();
 
         // Assign 1–3 random categories to each post
         foreach ($posts as $post) {
