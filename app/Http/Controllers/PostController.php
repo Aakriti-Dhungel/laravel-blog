@@ -42,7 +42,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Post::with('user', 'categories', 'comments');
+        $query = Post::with('user', 'categories')->withCount('comments');
 
         // Search filter
         if ($request->filled('search')) {
@@ -57,6 +57,17 @@ class PostController extends Controller
                 $q->where('categories.id', $request->category);
             });
         }
+
+
+        if ($request->filled('sort_comments')) {
+            $query->orderBy('comments_count', $request->sort_comments);
+        }
+
+
+        if ($request->filled('sort_time')) {
+            $query->orderBy('created_at', $request->sort_time); // asc | desc
+        }
+
 
         // Paginate the filtered results
         $posts = $query->paginate(10);
@@ -114,7 +125,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
+
         $post = Post::findOrFail($id);
+        $this->authorizeUser($post);
         $categories = Category::all();
 
         return view('post.edit', compact('post', 'categories'));
@@ -133,6 +146,7 @@ class PostController extends Controller
         ]);
 
         $post = Post::findOrFail($id);
+        $this->authorizeUser($post);
 
         $post->update([
             'title' => $request->input('title'),
@@ -152,9 +166,17 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
+
         $post = Post::findOrFail($id);
+        $this->authorizeUser($post);
         $post->delete();
 
         return redirect()->route('posts.index')->with('success', 'Post deleted successfully!');
+    }
+
+    public function authorizeUser(Post $post){
+        if($post->user_id !== Auth::id()){
+            abort(403,'Unauthorized user');
+        }
     }
 }
