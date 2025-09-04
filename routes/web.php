@@ -1,31 +1,40 @@
 <?php
 
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\Admin\PostController as AdminPostController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 
+// Home Route
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [UserController::class, 'home'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
+// USER ROUTES
 
-
-
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('/posts', PostController::class);
-    Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
-});
+    Route::resource('/comments', CommentController::class);
 
-
-Route::middleware('auth')->group(function () {
+    // Profile Management
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// ADMIN ROUTES
+
+Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminUserController::class, 'index'])->name('dashboard');
+    // Route::resource('/posts', AdminPostController::class);
+    // Route::resource('/users', AdminUserController::class)->only(['index', 'destroy']);
 });
 
 require __DIR__ . '/auth.php';

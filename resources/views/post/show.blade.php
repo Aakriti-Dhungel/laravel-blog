@@ -35,30 +35,33 @@
         <h2 class="font-bold text-2xl mt-8 mb-4">Comments</h2>
 
         @forelse ($post->comments as $comment)
-            <div class="mb-4 pb-3">
-                <strong>{{ $comment->user->name ?? 'Anonymous' }}</strong>
-                <span class="text-gray-500 text-sm">
-                    {{ $comment->created_at->diffForHumans() }}
-                </span>
-                <p class="mt-2 text-gray-700">{{ $comment->content }}</p>
-            </div>
+        <div class="mb-4 pb-3">
+            <strong>{{ $comment->user->name ?? 'Anonymous' }}</strong>
+            <span class="text-gray-500 text-sm">
+                {{ $comment->created_at->diffForHumans() }}
+            </span>
+            <p class="mt-2 text-gray-700">{{ $comment->content }}</p>
+        </div>
         @empty
-            <p class="text-gray-500">No comments yet. Be the first to comment!</p>
+        <p class="text-gray-500">No comments yet. Be the first to comment!</p>
         @endforelse
-
         @if(auth()->check())
-            <form action="{{ route('comments.store', $post) }}" method="POST" class="mt-6">
-                @csrf
-                <textarea name="content" id="content" rows="3" placeholder="Write your comment..."
-                    class="w-full border rounded-lg p-3 mb-3"></textarea>
-                <button type="submit"
-                    class="text-white font-bold bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2">
-                    Comment
-                </button>
-            </form>
+        <form action="{{ route('comments.store') }}" method="POST" class="mt-6">
+            @csrf
+            <input type="hidden" name="post_id" value="{{ $post->id }}">
+
+            <textarea name="content" id="content" rows="3" placeholder="Write your comment..."
+                class="w-full border rounded-lg p-3 mb-3" required></textarea>
+
+            <button type="submit"
+                class="text-white font-bold bg-blue-600 hover:bg-blue-700 rounded-lg px-4 py-2">
+                Comment
+            </button>
+        </form>
         @else
-            <p class="text-red-500 mt-4">You must be logged in to comment.</p>
+        <p class="text-red-500 mt-4">You must be logged in to comment.</p>
         @endif
+
 
 
         <div class="mt-10">
@@ -71,4 +74,5 @@
     </div>
 
 </body>
+
 </html>
