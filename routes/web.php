@@ -16,7 +16,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // USER ROUTES
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [UserUserController::class, 'home'])->name('dashboard');
-    Route::resource('/posts', UserPostController::class);
+    Route::resource('posts', UserPostController::class);
     Route::resource('/comments', UserCommentController::class);
 
     // Profile Management

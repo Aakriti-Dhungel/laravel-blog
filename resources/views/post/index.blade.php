@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Posts</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body class="bg-gray-50 min-h-screen flex flex-col items-center">
-
+<x-app-layout>
+    <!-- <body class="bg-gray-50 min-h-screen flex flex-col items-center"> -->
     <div class="w-full max-w-7xl mx-auto p-6 sm:p-8">
 
         @if(session('success'))
@@ -26,10 +16,9 @@
             </button>
         </div>
         @endif
-
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-4">Blog Posts</h1>
-
         <div class="text-right mb-6">
+            <h1 class="text-3xl font-bold text-center text-gray-800 mb-4">Blog Posts</h1>
+
             <a href="{{ route('posts.create') }}"
                 class="px-6 py-2 bg-blue-500 text-white rounded-xl shadow-md hover:bg-blue-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400">
                 Create Post
@@ -83,7 +72,7 @@
                     <div class="flex space-x-4">
                         <a href="{{ route('posts.edit', $post->id) }}"
                             class="text-green-500 hover:text-green-700 text-sm font-semibold">Edit</a>
-                             <a href="{{ route('posts.show', $post->id) }}"
+                        <a href="{{ route('posts.show', $post->id) }}"
                             class="text-green-700 hover:text-green-700 text-sm font-semibold">View</a>
                         <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="inline"
                             onsubmit="return confirm('Are you sure you want to delete this post?')">
@@ -116,13 +105,10 @@
         </div>
         @endif
     </div>
-
     <script>
         document.querySelector('.close')?.addEventListener('click', function() {
             this.parentElement.style.display = "none";
         })
     </script>
 
-</body>
-
-</html>
+</x-app-layout>
