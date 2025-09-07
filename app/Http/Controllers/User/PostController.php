@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
@@ -175,9 +176,10 @@ class PostController extends Controller
         return redirect()->route('posts.index')->with('success', 'Post deleted successfully!');
     }
 
-    public function authorizeUser(Post $post){
-        if($post->user_id !== Auth::id()){
-            abort(403,'Unauthorized user');
+    public function authorizeUser(Post $post)
+    {
+        if ($post->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized user');
         }
     }
 }
