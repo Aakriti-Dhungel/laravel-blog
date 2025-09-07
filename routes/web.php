@@ -7,11 +7,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\HomeController;
 
 // Home Route
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/home', [HomeController::class,'index'])->name('home');
+
 
 Route::get('/dashboard', [UserController::class, 'home'])
     ->middleware(['auth', 'verified'])
