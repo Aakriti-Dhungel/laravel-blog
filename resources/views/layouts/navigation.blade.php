@@ -10,7 +10,7 @@
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
                     @else
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('user.dashboard') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
                     @endif
@@ -23,7 +23,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     @else
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     @endif
@@ -46,7 +46,7 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
+                        <x-dropdown-link :href="route('user.profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
@@ -86,7 +86,7 @@
                         Admin Dashboard
                     </a>
                     @else
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('user.dashboard') }}">
                         My Dashboard
                     </a>
                     @endif
@@ -98,9 +98,13 @@
                     @if(Auth::check() && Auth::user()->role=='admin')
                     <li><a href="{{ route('admin.dashboard') }}" class="block">Dashboard</a></li>
                     @else
-                    <li><a href="{{ route('dashboard') }}" class="block">Dashboard</a></li>
+                    <li><a href="{{ route('user.dashboard') }}" class="block">Dashboard</a></li>
                     @endif
-                    <li><a href="{{ route('profile.edit') }}" class="block">Profile</a></li>
+                    @if(Auth::user()->role === 'admin')
+                    <x-dropdown-link :href="route('admin.profile.edit')">Profile</x-dropdown-link>
+                    @else
+                    <x-dropdown-link :href="route('user.profile.edit')">Profile</x-dropdown-link>
+                    @endif
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -112,5 +116,3 @@
         </div>
     </div>
 </nav>
-
-

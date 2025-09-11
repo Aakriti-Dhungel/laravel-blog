@@ -1,5 +1,3 @@
-<!-- resources/views/components/frontend-navbar.blade.php -->
-<!-- Very little is needed to make a happy life. - Marcus Aurelius -->
 <nav class="flex items-center justify-between w-full h-[80px] bg-blue-700 px-4 md:px-8 shadow-lg sticky top-0 z-50">
     <!-- Logo -->
     <div class="flex items-center">
@@ -49,6 +47,42 @@
                     <i class="fa fa-search fa-lg"></i>
                 </button>
             </li>
+
+            <!-- Login / Register -->
+            @guest
+            <li>
+                <a href="{{ route('login') }}"
+                    class="block text-white hover:bg-blue-600 px-4 py-2 rounded-lg">
+                    Login
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('register') }}"
+                    class="block text-white hover:bg-blue-600 px-4 py-2 rounded-lg">
+                    Register
+                </a>
+            </li>
+            @endguest
+
+            @auth
+            <li>
+                <a href="{{ auth()->user()->role === 'admin' ? route('admin.dashboard') : route('user.dashboard') }}"
+                    class="block text-white hover:bg-blue-600 px-4 py-2 rounded-lg">
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('logout') }}"
+                    class="block text-white hover:bg-blue-600 px-4 py-2 rounded-lg"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    Logout
+                </a>
+            </li>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                @csrf
+            </form>
+            @endauth
+
         </ul>
     </div>
 </nav>
@@ -67,6 +101,7 @@
             <button type="submit" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg">Search</button>
         </form>
     </div>
+
 </div>
 
 <script>
