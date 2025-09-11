@@ -1,12 +1,4 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Post</title>
-    @vite('resources/css/app.css') 
-</head>
+<x-admin-layout :title="'Edit Post'">
 
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
 
@@ -78,6 +70,4 @@
         </form>
     </div>
 
-</body>
-
-</html> -->
+</x-admin-layout>
