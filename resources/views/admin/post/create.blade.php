@@ -4,7 +4,7 @@
         <div class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-8">
             <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Create New Post</h1>
 
-            <form action="{{ route('posts.store') }}" method="POST" class="space-y-6">
+            <form action="{{ route('admin.posts.store') }}" method="POST" class="space-y-6">
                 @csrf
                 <div>
                     <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">Title</label>

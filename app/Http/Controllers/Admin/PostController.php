@@ -174,7 +174,7 @@ class PostController extends Controller
         // $this->authorizeUser($post);
         $post->delete();
 
-        return redirect()->route('admin.posts.index')->with('success', 'Post deleted successfully!');
+        return redirect()->route('admin.posts.index')->with('delete', 'Post deleted successfully!');
     }
 
     public function authorizeUser(Post $post){
