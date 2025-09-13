@@ -13,7 +13,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 
 // Home Route
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 Route::get('/dashboard', [UserController::class, 'home'])
