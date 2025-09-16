@@ -17,13 +17,11 @@ use App\Http\Controllers\HomeController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
-Route::get('/dashboard', [UserController::class, 'home'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
 
 // USER ROUTES
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', [UserController::class, 'home'])->name('dashboard');
     Route::resource('/posts', PostController::class);
     Route::resource('/comments', CommentController::class);
 
