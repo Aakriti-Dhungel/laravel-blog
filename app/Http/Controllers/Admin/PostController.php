@@ -159,7 +159,6 @@ class PostController extends Controller
 
         $post->categories()->sync($request->input('categories', []));
 
-
         return redirect()->route('admin.posts.index')->with('success', 'Post updated successfully!');
     }
 
@@ -177,9 +176,10 @@ class PostController extends Controller
         return redirect()->route('admin.posts.index')->with('delete', 'Post deleted successfully!');
     }
 
-    public function authorizeUser(Post $post){
-        if($post->user_id !== Auth::id()){
-            abort(403,'Unauthorized Access');
+    public function authorizeUser(Post $post)
+    {
+        if ($post->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized Access');
         }
     }
 }

@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="flex justify-between items-center pt-4">
-                    <a href="{{ route('posts.index') }}"
+                    <a href="{{ route('admin.posts.index') }}"
                         class="px-5 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
                         Back
                     </a>

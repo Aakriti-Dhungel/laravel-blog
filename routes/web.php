@@ -14,14 +14,15 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 
 // Home Route
-Route::get('/', [HomeController::class, 'index'])->name('home');
-
+Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('/blog', [HomeController::class, 'index'])->name('frontend.blogs.index');
+Route::get('/blog/{id}', [HomeController::class, 'show'])->name('frontend.blogs.show');
 
 
 // USER ROUTES
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/', [UserController::class, 'home'])->name('dashboard');
+    Route::get('/dashboard', [UserController::class, 'home'])->name('dashboard');
     Route::resource('/posts', PostController::class);
     Route::resource('/comments', CommentController::class);
 
