@@ -10,11 +10,12 @@ class HomeController extends Controller
 {
     public function home()
     {
-        return view('home');
+        $posts = Post::where('status', 'published')->latest()->paginate(9);
+        return view('home', compact('posts'));
     }
     public function index()
     {
-        $posts = Post::where('status', 'published')->latest()->paginate(9);
+        $posts = Post::where('status', 'published')->latest()->paginate(15);
         return view('frontend.blogs.index', compact('posts'));
     }
 
@@ -32,4 +33,5 @@ class HomeController extends Controller
 
         return view('frontend.blogs.show', compact('post'));
     }
+
 }
