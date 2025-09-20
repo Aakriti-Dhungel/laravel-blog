@@ -1,6 +1,6 @@
 <x-admin-layout :title="'Create Post'">
 
-    <body class="bg-gray-50 min-h-screen flex flex-col items-center py-10">
+    <div class="bg-gray-50 min-h-screen flex flex-col items-center py-9">
         <div class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-8">
             <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Create New Post</h1>
 

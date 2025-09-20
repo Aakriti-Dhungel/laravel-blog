@@ -8,6 +8,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <script src="{{ asset('jQuery/jquery-3.7.1.min.js') }}"></script>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -32,12 +33,11 @@
 
         <div class="grid grid-cols-6 h-screen">
             <div class="aside1 col-span-1 bg-blue-500">
-
                 <x-admin-sidebar />
             </div>
+
             <main class="col-span-5">
                 {{ $slot }}
-
             </main>
         </div>
     </div>

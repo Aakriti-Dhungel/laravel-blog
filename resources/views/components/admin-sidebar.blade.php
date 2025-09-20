@@ -19,6 +19,14 @@
                     <span>Posts</span>
                 </a>
             </li>
+            <!-- Category -->
+            <li class="{{ request()->routeIs('admin.categories.*') ? 'active' : '' }} 
+                       px-10 py-3 w-full hover:bg-blue-800 text-white font-bold">
+                <a href="{{ route('admin.categories.index') }}" class="nav-link flex items-center gap-2">
+                    <i class="fa fa-clipboard"></i>
+                    <span>Category</span>
+                </a>
+            </li>
 
             <!-- Profile -->
             @if(Route::has('admin.profile.edit'))
