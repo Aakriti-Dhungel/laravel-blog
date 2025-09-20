@@ -18,6 +18,7 @@ use App\Http\Controllers\HomeController;
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/blog', [HomeController::class, 'index'])->name('frontend.blogs.index');
 Route::get('/blog/{id}', [HomeController::class, 'show'])->name('frontend.blogs.show');
+Route::get('/about-us', [HomeController::class, 'about'])->name('frontend.about-us');
 
 
 // USER ROUTES
@@ -40,11 +41,6 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
     Route::resource('/posts', AdminPostController::class);
     Route::resource('/users', AdminUserController::class)->only(['index', 'destroy']);
     Route::resource('/categories',CategoryController::class);
-
-     // Profile Management
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__ . '/auth.php';

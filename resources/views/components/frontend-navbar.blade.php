@@ -1,4 +1,4 @@
-<nav class="bg-white flex justify-between items-center px-6 py-3 fixed top-0 left-0 right-0 z-50 shadow">
+<nav class="bg-white flex flex-wrap justify-between items-center px-6 py-3 fixed top-0 left-0 right-0 z-50 shadow">
     <!-- Logo -->
     <a href="{{ route('home') }}">
         <img src="{{ asset('img/diginepal.png') }}"
@@ -9,7 +9,7 @@
     <ul class="hidden md:flex gap-8">
         <li> <a href="{{route('home')}}" class="hover:text-gray-500 {{ request()->is('/') ? 'text-gray-800' : '' }}">Home</a></li>
         <li><a href="{{ route('frontend.blogs.index') }}" class="hover:text-gray-500">Blog</a></li>
-        <li><a href="{{ url('/about') }}" class="hover:text-gray-500">About Us</a></li>
+        <li><a href="{{ route('frontend.about-us') }}" class="hover:text-gray-500">About Us</a></li>
         <li><a href="{{ url('/contact') }}" class="hover:text-gray-500">Contact</a></li>
     </ul>
 
@@ -47,7 +47,7 @@
     <ul class="flex flex-col gap-4 items-center">
         <li><a href="{{ route('home') }}" class="hover:text-gray-500">Home</a></li>
         <li><a href="{{ route('frontend.blogs.index') }}" class="hover:text-gray-500">Blog</a></li>
-        <li><a href="{{ url('/about') }}" class="hover:text-gray-500">About Us</a></li>
+        <li><a href="{{ route('frontend.about-us') }}" class="hover:text-gray-500">About Us</a></li>
         <li><a href="{{ url('/contact') }}" class="hover:text-gray-500">Contact</a></li>
 
         @auth

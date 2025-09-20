@@ -24,13 +24,16 @@
         <x-frontend-navbar />
     </header>
 
-    <main>
-        {{ $slot }}
+    <main class="w-full overflow-x-hidden pt-20">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+
+            {{ $slot }}
+        </div>
     </main>
 
-    <footer>
-        <x-frontend-footer />
-    </footer>
+
+    <x-frontend-footer />
+
 </body>
 
 </html>

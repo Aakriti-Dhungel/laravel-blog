@@ -10,7 +10,7 @@ class HomeController extends Controller
 {
     public function home()
     {
-        $posts = Post::where('status', 'published')->latest()->paginate(9);
+        $posts = Post::where('status', 'published')->latest()->take(9)->get();
         return view('home', compact('posts'));
     }
     public function index()
@@ -34,4 +34,7 @@ class HomeController extends Controller
         return view('frontend.blogs.show', compact('post'));
     }
 
+    public function about(){
+        return view('frontend.about-us');
+    }
 }
