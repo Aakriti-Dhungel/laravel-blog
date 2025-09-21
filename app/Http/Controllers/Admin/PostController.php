@@ -70,6 +70,10 @@ class PostController extends Controller
             $query->orderBy('created_at', $request->sort_time); // asc | desc
         }
 
+        if ($request->filled('status') && in_array($request->status, ['draft', 'published'])) {
+            $query->where('status', $request->status);
+        }
+
 
         // Paginate the filtered results
         $posts = $query->paginate(10);

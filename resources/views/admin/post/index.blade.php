@@ -71,6 +71,11 @@
                     <option value="desc" {{ request('sort_time') == 'desc' ? 'selected' : '' }}>Newest First</option>
                 </select>
 
+                <select name="status">
+                    <option value="">All Status</option>
+                    <option value="published" {{ request('status') == 'published' ? 'selected' : '' }}>Published</option>
+                    <option value="draft" {{ request('status') == 'draft' ? 'selected' : '' }}>Draft</option>
+                </select>
                 <input type="search" name="search" placeholder="Search posts..."
                     value="{{ request('search') }}"
                     class="flex-1 rounded-lg border px-4 py-3 focus:ring-2 focus:ring-blue-400 text-base">
