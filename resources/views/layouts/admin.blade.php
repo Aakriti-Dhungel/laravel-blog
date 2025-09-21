@@ -39,8 +39,10 @@
             <main class="col-span-5">
                 {{ $slot }}
             </main>
+
         </div>
     </div>
+    
 </body>
 
 
