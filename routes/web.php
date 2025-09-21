@@ -28,6 +28,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('/posts', PostController::class);
     Route::resource('/comments', CommentController::class);
 
+
+
     // Profile Management
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -40,7 +42,10 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     Route::resource('/posts', AdminPostController::class);
     Route::resource('/users', AdminUserController::class)->only(['index', 'destroy']);
-    Route::resource('/categories',CategoryController::class);
+    Route::resource('/categories', CategoryController::class);
+    Route::get('/posts-trash', [AdminPostController::class, 'trash'])->name('posts.trash');
+    Route::get('/posts-restore/{id}', [AdminPostController::class, 'restore'])->name('posts.restore');
+    Route::delete('/posts-force-delete/{id}', [AdminPostController::class, 'forceDelete'])->name('posts.forceDelete');
 });
 
 require __DIR__ . '/auth.php';

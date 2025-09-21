@@ -7,12 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory;
-    protected $fillable = ['title', 'body','views','status', 'user_id'];
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
+    protected $fillable = ['title', 'body', 'views', 'status', 'user_id'];
 
 
     public function user(): BelongsTo

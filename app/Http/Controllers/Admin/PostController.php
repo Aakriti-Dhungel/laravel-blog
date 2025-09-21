@@ -186,4 +186,30 @@ class PostController extends Controller
             abort(403, 'Unauthorized Access');
         }
     }
+
+    //trash
+    public function trash()
+    {
+        $posts = Post::onlyTrashed()->paginate(10);
+        return view('admin.post.trash', compact('posts'));
+    }
+
+
+    // Restore
+    public function restore($id)
+    {
+        $post = Post::withTrashed()->findOrFail($id);
+        $post->restore();
+
+        return redirect()->route('admin.posts.index')->with('success', 'Post restored successfully.');
+    }
+
+    // Force Delete 
+    public function forceDelete($id)
+    {
+        $post = Post::withTrashed()->findOrFail($id);
+        $post->forceDelete();
+
+        return redirect()->route('admin.posts.index')->with('success', 'Post permanently deleted.');
+    }
 }

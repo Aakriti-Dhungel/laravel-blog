@@ -36,14 +36,26 @@
             </div>
             @endif
             <h1 class="text-3xl font-bold text-center text-gray-800 mb-4">Blog Posts</h1>
-
+<!-- 
             <div class="text-right mb-6">
                 <a href="{{ route('admin.posts.create') }}"
                     class="px-6 py-2 bg-blue-500 text-white rounded-xl shadow-md hover:bg-blue-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400">
                     Create Post
                 </a>
-            </div>
+            </div> -->
 
+
+            <div class="flex items-center justify-end space-x-4 mb-6">
+                <a href="{{ route('admin.posts.create') }}"
+                    class="px-6 py-2 bg-blue-500 text-white rounded-xl shadow-md hover:bg-blue-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    Create Post
+                </a>
+
+                <a href="{{ route('admin.posts.trash') }}"
+                    class="px-6 py-2 bg-red-500 text-white rounded-xl shadow-md hover:bg-red-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-red-400">
+                    Trash
+                </a>
+            </div>
             <form action="{{ route('admin.posts.index') }}" method="GET"
                 class="flex flex-wrap items-center gap-4 mb-8 w-full">
 
