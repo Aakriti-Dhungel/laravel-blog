@@ -124,6 +124,8 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         // return $post;
+        $post->incrementViewsOncePerSession();
+
         return view('admin.post.show', compact('post'));
     }
 

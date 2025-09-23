@@ -25,6 +25,7 @@ Route::get('/about-us', [HomeController::class, 'about'])->name('frontend.about-
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [UserController::class, 'home'])->name('dashboard');
+    Route::get('/user/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
     Route::resource('/posts', PostController::class);
     Route::resource('/comments', CommentController::class);
 

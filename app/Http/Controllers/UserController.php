@@ -15,6 +15,11 @@ class UserController extends Controller
             return redirect()->route('admin.dashboard');
         }
 
-        return view('home',compact('posts'));
+        return view('home', compact('posts'));
+    }
+
+    public function dashboard()
+    {
+        return redirect()->route('posts.index');
     }
 }

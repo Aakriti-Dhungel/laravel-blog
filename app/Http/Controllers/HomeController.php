@@ -25,16 +25,17 @@ class HomeController extends Controller
         $post = Post::where('status', 'published')->findOrFail($id);
 
         // Handle unique view count using cookie
-        $cookie = "post_$id";
-        if (!Cookie::get($cookie)) {
-            $post->increment('views');
-            Cookie::queue(Cookie::make($cookie, $id, 0)); // until browser closes
-        }
-
+        // $cookie = "post_$id";
+        // if (!Cookie::get($cookie)) {
+        //     $post->increment('views');
+        //     Cookie::queue(Cookie::make($cookie, $id, 0)); // until browser closes
+        // }
+        $post->incrementViewsOncePerSession();
         return view('frontend.blogs.show', compact('post'));
     }
 
-    public function about(){
+    public function about()
+    {
         return view('frontend.about-us');
     }
 }

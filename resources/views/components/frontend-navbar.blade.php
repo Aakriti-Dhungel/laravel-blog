@@ -24,7 +24,12 @@
             <div id="dropdown" class="absolute right-0 mt-2 w-48 bg-white border rounded shadow-md hidden">
                 @if(Auth::user()->role === 'admin')
                 <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Dashboard</a>
+                @elseif(Auth::user()->role === 'user')
+                <a href="{{ route('user.dashboard') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Dashboard</a>
+                <a href="{{ route('posts.create') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Create Post</a>
+                <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
                 @endif
+
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"
@@ -44,7 +49,7 @@
 
 <!-- Mobile Menu -->
 <div id="mobileMenu" class="hidden bg-white px-6 py-4 md:hidden">
-    <ul class="flex flex-col gap-4 items-center">
+    <ul class="flex flex-col gap-4 items-center mt-20">
         <li><a href="{{ route('home') }}" class="hover:text-gray-500">Home</a></li>
         <li><a href="{{ route('frontend.blogs.index') }}" class="hover:text-gray-500">Blog</a></li>
         <li><a href="{{ route('frontend.about-us') }}" class="hover:text-gray-500">About Us</a></li>
@@ -53,7 +58,12 @@
         @auth
         @if(Auth::user()->role === 'admin')
         <li><a href="{{ route('dashboard') }}" class="hover:text-gray-500">Dashboard</a></li>
+        @elseif(Auth::user()->role === 'user')
+        <a href="{{ route('user.dashboard') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Dashboard</a>
+        <a href="{{ route('posts.create') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Create Post</a>
+        <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
         @endif
+
         <li>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf

@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 class PostController extends Controller
 {
@@ -35,14 +36,14 @@ class PostController extends Controller
 
     public function commentPerPost()
     {
-        $posts = Post::withCount('comment')->get();
+        $posts = Post::withCount('comments')->get();
     }
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $query = Post::with('user', 'categories')->withCount('comments');
+        $query = Post::with('user', 'categories')->withCount('comments')->where('user_id', Auth::id());
 
         // Search filter
         if ($request->filled('search')) {
@@ -67,11 +68,27 @@ class PostController extends Controller
         if ($request->filled('sort_time')) {
             $query->orderBy('created_at', $request->sort_time); // asc | desc
         }
+        if ($request->filled('status') && in_array($request->status, ['draft', 'published'])) {
+            $query->where('status', $request->status);
+        }
 
+        if ($request->filled('sort')) {
+            if ($request->sort === 'latest') {
+                $query->orderBy('created_at', 'desc');
+            } elseif ($request->sort === 'oldest') {
+                $query->orderBy('created_at', 'asc');
+            } elseif ($request->sort === 'popular') {
+                $query->orderBy('views', 'desc');
+            } elseif ($request->sort === 'comments') {
+                $query->orderBy('comments_count', 'desc');
+            }
+        }
 
         // Paginate the filtered results
-        $posts = $query->paginate(10);
-        $categories = Category::all();
+        // $posts = $query->paginate(10);
+        // $categories = Category::all();
+        $posts = $query->paginate(10)->withQueryString();
+        $categories = Category::select('id', 'name')->get();
         return view('post.index', compact('posts', 'categories'));
     }
 
@@ -116,8 +133,10 @@ class PostController extends Controller
      */
     public function show($id)
     {
+
+        // $post = Post::where('status', 'published')->findOrFail($id);
         $post = Post::findOrFail($id);
-        // return $post;
+        $post->incrementViewsOncePerSession();
         return view('post.show', compact('post'));
     }
 
@@ -174,9 +193,10 @@ class PostController extends Controller
         return redirect()->route('posts.index')->with('success', 'Post deleted successfully!');
     }
 
-    public function authorizeUser(Post $post){
-        if($post->user_id !== Auth::id()){
-            abort(403,'Unauthorized user');
+    public function authorizeUser(Post $post)
+    {
+        if ($post->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized user');
         }
     }
 }

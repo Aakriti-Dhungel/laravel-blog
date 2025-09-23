@@ -7,8 +7,12 @@
             <div class="space-y-4 border-b pb-6">
                 <h1 class="text-4xl font-bold mb-4 text-gray-900">{{ $post->title }}</h1>
 
-                <p class="text-sm text-gray-600">
+                <!-- <p class="text-sm text-gray-600">
                     {{ $post->user->name }} . {{ $post->created_at->format('F d, Y') }}
+                </p> -->
+                <p class="text-sm text-gray-500 mb-4">
+                    By <span class="font-semibold">{{ $post->user->name }}</span>| Views: <span class="font-semibold">{{ $post->views }}</span> |
+                    {{ $post->created_at->format('F d, Y') }}
                 </p>
 
                 <p class="leading-relaxed text-lg text-gray-700">{{ $post->body }}</p>
@@ -24,19 +28,7 @@
                 </p>
             </div>
 
-            <h2 class="font-bold text-2xl mt-8 mb-4">Comments</h2>
 
-            @forelse ($post->comments as $comment)
-            <div class="mb-4 pb-3">
-                <strong>{{ $comment->user->name ?? 'Anonymous' }}</strong>
-                <span class="text-gray-500 text-sm">
-                    {{ $comment->created_at->diffForHumans() }}
-                </span>
-                <p class="mt-2 text-gray-700">{{ $comment->content }}</p>
-            </div>
-            @empty
-            <p class="text-gray-500">No comments yet. Be the first to comment!</p>
-            @endforelse
             @if(auth()->check())
             <form action="{{ route('comments.store') }}" method="POST" class="mt-6">
                 @csrf
@@ -53,6 +45,21 @@
             @else
             <p class="text-red-500 mt-4">You must be logged in to comment.</p>
             @endif
+
+            <h2 class="font-bold text-2xl mt-8 mb-4">Comments</h2>
+
+            @forelse ($post->comments as $comment)
+            <div class="mb-4 pb-3">
+                <strong>{{ $comment->user->name ?? 'Anonymous' }}</strong>
+                <span class="text-gray-500 text-sm">
+                    {{ $comment->created_at->diffForHumans() }}
+                </span>
+                <p class="mt-2 text-gray-700">{{ $comment->content }}</p>
+            </div>
+            @empty
+            <p class="text-gray-500">No comments yet. Be the first to comment!</p>
+            @endforelse
+
 
 
 

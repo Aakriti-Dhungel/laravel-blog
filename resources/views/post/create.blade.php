@@ -1,14 +1,5 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Post</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body class="bg-gray-50 min-h-screen flex flex-col items-center py-10">
+<x-app-layout>
+<div class="bg-gray-50 min-h-screen flex flex-col items-center py-10">
     <div class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-8">
         <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Create New Post</h1>
 
@@ -75,5 +66,5 @@
         </form>
     </div>
 
-</body>
-</html> -->
+</div>
+</x-app-layout>
