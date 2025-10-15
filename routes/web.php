@@ -17,7 +17,7 @@ use App\Http\Controllers\HomeController;
 // Home Route
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/blog', [HomeController::class, 'index'])->name('frontend.blogs.index');
-Route::get('/blog/{id}', [HomeController::class, 'show'])->name('frontend.blogs.show');
+Route::get('/blog/{slug}', [HomeController::class, 'show'])->name('frontend.blogs.show');
 Route::get('/about-us', [HomeController::class, 'about'])->name('frontend.about-us');
 
 

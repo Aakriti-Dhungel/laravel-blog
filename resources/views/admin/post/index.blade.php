@@ -111,7 +111,7 @@
                         <div class="flex space-x-4">
                             <a href="{{ route('admin.posts.edit', $post->id) }}"
                                 class="text-green-500 hover:text-green-700 text-sm font-semibold">Edit</a>
-                            <a href="{{ route('admin.posts.show', $post->id) }}"
+                            <a href="{{ route('admin.posts.show', $post->slug) }}"
                                 class="text-green-700 hover:text-green-700 text-sm font-semibold">View</a>
                             <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" class="inline"
                                 onsubmit="return confirm('Are you sure you want to delete this post?')">

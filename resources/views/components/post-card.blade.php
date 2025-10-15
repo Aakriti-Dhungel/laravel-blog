@@ -14,7 +14,7 @@
             | Views: {{ $post->views ?? 0 }} 
             | {{ $post->created_at->format('F d, Y') }}
         </div>
-        <a href="{{ route('frontend.blogs.show', $post->id) }}" 
+        <a href="{{ route('frontend.blogs.show', $post->slug) }}" 
            class="inline-block px-4 py-2 text-sm font-medium text-white bg-pink-500 rounded-lg hover:bg-pink-600">
             Read More
         </a>

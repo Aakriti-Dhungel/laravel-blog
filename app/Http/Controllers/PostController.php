@@ -131,14 +131,17 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Post $post)
     {
+        // if ($post->status !== 'published') {
+        //     abort(404);
+        // }
 
-        // $post = Post::where('status', 'published')->findOrFail($id);
-        $post = Post::findOrFail($id);
         $post->incrementViewsOncePerSession();
+        
         return view('post.show', compact('post'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

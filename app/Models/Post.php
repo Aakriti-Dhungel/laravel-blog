@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
@@ -16,9 +17,35 @@ class Post extends Model
     use HasFactory;
     use SoftDeletes;
     protected $dates = ['deleted_at'];
-    protected $fillable = ['title', 'body', 'views', 'status', 'user_id'];
+    protected $fillable = ['title','slug', 'body', 'views', 'status', 'user_id'];
 
 
+    // This function runs automatically when you create or update posts
+    protected static function booted()
+    {
+        static::creating(function ($post) {
+            $post->slug = static::generateSlug($post->title);
+        });
+    }
+
+    // Function to create a unique slug
+    protected static function generateSlug($title)
+    {
+        $slug = Str::slug($title);
+        $count = 1;
+
+        while (static::where('slug', $slug)->exists()) {
+            $slug = Str::slug($title) . '-' . $count++;
+        }
+
+        return $slug;
+    }
+
+    // Use slug instead of ID in routes
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -52,7 +79,7 @@ class Post extends Model
 
     // }
 
-     public function incrementViewsOncePerSession()
+    public function incrementViewsOncePerSession()
     {
         $cookieName = "post_{$this->id}";
 

@@ -18,11 +18,12 @@ class HomeController extends Controller
         $posts = Post::where('status', 'published')->latest()->paginate(15);
         return view('frontend.blogs.index', compact('posts'));
     }
-
-
-    public function show($id)
+    
+    public function show(Post $post,$slug)
     {
-        $post = Post::where('status', 'published')->findOrFail($id);
+        $post = Post::where('slug', $slug)
+            ->where('status', 'published')
+            ->firstOrFail();
 
         // Handle unique view count using cookie
         // $cookie = "post_$id";
