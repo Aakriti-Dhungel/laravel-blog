@@ -19,6 +19,7 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/blog', [HomeController::class, 'index'])->name('frontend.blogs.index');
 Route::get('/blog/{slug}', [HomeController::class, 'show'])->name('frontend.blogs.show');
 Route::get('/about-us', [HomeController::class, 'about'])->name('frontend.about-us');
+Route::get('/contact', [HomeController::class, 'contact'])->name('frontend.contact');
 
 
 // USER ROUTES
