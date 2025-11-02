@@ -22,9 +22,10 @@ class ContactController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:100',
             'email' => 'required|email',
-            'subject' => 'required|string|max:150',
+            'subject' => 'required|string|max:200',
             'message' => 'required|string',
         ]);
+        Contact::create($validated);
 
         Mail::to('aakritidhungel01@gmail.com')->send(new ContactMail($validated));
 
