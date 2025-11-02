@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CommentController as AdminCommentController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 
 // Home Route
@@ -19,7 +20,10 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/blog', [HomeController::class, 'index'])->name('frontend.blogs.index');
 Route::get('/blog/{slug}', [HomeController::class, 'show'])->name('frontend.blogs.show');
 Route::get('/about-us', [HomeController::class, 'about'])->name('frontend.about-us');
-Route::get('/contact', [HomeController::class, 'contact'])->name('frontend.contact');
+
+// Contact Routes
+Route::get('/contact', [ContactController::class, 'contact'])->name('frontend.contact');
+Route::post('/contact', [ContactController::class, 'sendContact'])->name('contact.store');
 
 
 // USER ROUTES

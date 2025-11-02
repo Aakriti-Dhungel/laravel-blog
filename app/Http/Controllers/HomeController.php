@@ -18,8 +18,8 @@ class HomeController extends Controller
         $posts = Post::where('status', 'published')->latest()->paginate(15);
         return view('frontend.blogs.index', compact('posts'));
     }
-    
-    public function show(Post $post,$slug)
+
+    public function show(Post $post, $slug)
     {
         $post = Post::where('slug', $slug)
             ->where('status', 'published')
@@ -38,9 +38,5 @@ class HomeController extends Controller
     public function about()
     {
         return view('frontend.about-us');
-    }
-     public function contact()
-    {
-        return view('frontend.contact');
     }
 }
