@@ -9,13 +9,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
 
 class Post extends Model
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
-    use HasFactory;
+    use HasFactory, Notifiable;
     use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $fillable = ['title', 'slug', 'body', 'views', 'status', 'user_id'];
@@ -27,7 +28,7 @@ class Post extends Model
         static::creating(function ($post) {
             $post->slug = static::generateSlug($post->title);
         });
-        
+
         static::updating(function ($post) {
             if ($post->isDirty('title')) { //    // Slug regeneration if title changes)
                 $post->slug = static::generateSlug($post->title);

@@ -3,7 +3,9 @@
 namespace App\Observers;
 
 use App\Models\Post;
+use App\Notifications\PostPublishedNotification;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Notification;
 
 class PostObserver
 {
@@ -12,7 +14,10 @@ class PostObserver
      */
     public function created(Post $post): void
     {
-        //
+        if ($post->status === 'published') {
+            Notification::route('slack', env('SLACK_WEBHOOK_URL'))
+                ->notify(new PostPublishedNotification($post));
+        }
     }
 
     /**
