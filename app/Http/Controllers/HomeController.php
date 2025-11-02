@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
+
 
 class HomeController extends Controller
 {
@@ -21,16 +23,25 @@ class HomeController extends Controller
 
     public function show(Post $post, $slug)
     {
-        $post = Post::where('slug', $slug)
-            ->where('status', 'published')
-            ->firstOrFail();
+        // $post = Post::where('slug', $slug)
+        //     ->where('status', 'published')
+        //     ->firstOrFail();
 
-        // Handle unique view count using cookie
-        // $cookie = "post_$id";
-        // if (!Cookie::get($cookie)) {
-        //     $post->increment('views');
-        //     Cookie::queue(Cookie::make($cookie, $id, 0)); // until browser closes
-        // }
+        // $post = Cache::remember("post_{$slug}", 60, function () use ($slug) {
+        //     return Post::where('slug', $slug)
+        //         ->where('status', 'published')
+        //         ->firstOrFail();
+        // });
+
+        $cacheKey = "post_{$slug}";
+        $fromCache = Cache::has($cacheKey);
+
+        // Cache the post for 60 seconds
+        $post = Cache::remember($cacheKey, now()->addSeconds(120), function () use ($slug) {
+            return Post::where('slug', $slug)
+                ->where('status', 'published')
+                ->firstOrFail();
+        });
         $post->incrementViewsOncePerSession();
         return view('frontend.blogs.show', compact('post'));
     }

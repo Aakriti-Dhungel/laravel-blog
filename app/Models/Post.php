@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\PostObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,7 +18,7 @@ class Post extends Model
     use HasFactory;
     use SoftDeletes;
     protected $dates = ['deleted_at'];
-    protected $fillable = ['title','slug', 'body', 'views', 'status', 'user_id'];
+    protected $fillable = ['title', 'slug', 'body', 'views', 'status', 'user_id'];
 
 
     // This function runs automatically when you create or update posts
@@ -26,6 +27,16 @@ class Post extends Model
         static::creating(function ($post) {
             $post->slug = static::generateSlug($post->title);
         });
+        
+        static::updating(function ($post) {
+            if ($post->isDirty('title')) { //    // Slug regeneration if title changes)
+                $post->slug = static::generateSlug($post->title);
+            }
+        });
+
+
+        // Register observer for cache clearing
+        static::observe(\App\Observers\PostObserver::class);
     }
 
     // Function to create a unique slug
